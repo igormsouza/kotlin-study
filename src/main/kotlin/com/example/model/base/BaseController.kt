@@ -1,6 +1,6 @@
-package com.example.controller.model.base
+package com.example.model.base
 
-import com.example.support.base.BaseService
+import com.example.service.base.BaseService
 import io.micronaut.http.HttpHeaders
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType

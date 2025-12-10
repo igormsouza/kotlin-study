@@ -1,13 +1,15 @@
-package com.example.controller.model.domain
+package com.example.model.domain
 
-import com.example.controller.model.base.BaseDomain
-import io.micronaut.serde.annotation.Serdeable
+import com.example.model.base.BaseDomain
+import io.micronaut.serde.annotation.Serdeable.Deserializable
+import io.micronaut.serde.annotation.Serdeable.Serializable
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 
-@Serdeable
+@Serializable
+@Deserializable
 @Schema(description = "User")
 data class User(
     @Schema(description = "Unique identifier", example = "1")

@@ -1,4 +1,4 @@
-package com.example.support.util
+package com.example.service.util
 
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse

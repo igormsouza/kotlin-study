@@ -1,4 +1,4 @@
-package com.example.controller.model
+package com.example.model.domain
 
 import io.micronaut.serde.annotation.Serdeable
 

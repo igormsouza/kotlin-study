@@ -1,7 +1,7 @@
 package com.example.controller
 
-import com.example.controller.model.EchoRequest
-import com.example.controller.model.Greeting
+import com.example.model.request.EchoRequest
+import com.example.model.domain.Greeting
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller

@@ -1,4 +1,4 @@
-package com.example.controller.model.request
+package com.example.model.request
 
 import io.micronaut.serde.annotation.Serdeable
 import io.swagger.v3.oas.annotations.media.Schema

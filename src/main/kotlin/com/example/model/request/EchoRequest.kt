@@ -1,4 +1,4 @@
-package com.example.controller.model
+package com.example.model.request
 
 import io.micronaut.serde.annotation.Serdeable
 import jakarta.validation.constraints.NotBlank

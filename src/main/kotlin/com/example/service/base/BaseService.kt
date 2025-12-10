@@ -1,6 +1,6 @@
-package com.example.support.base
+package com.example.service.base
 
-import com.example.controller.model.base.BaseDomain
+import com.example.model.base.BaseDomain
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicLong
 

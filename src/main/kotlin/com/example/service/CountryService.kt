@@ -1,8 +1,8 @@
-package com.example.support
+package com.example.service
 
-import com.example.controller.model.domain.Country
-import com.example.controller.model.request.CountryRequest
-import com.example.support.base.BaseService
+import com.example.model.domain.Country
+import com.example.model.request.CountryRequest
+import com.example.service.base.BaseService
 import jakarta.inject.Singleton
 
 @Singleton

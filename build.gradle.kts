@@ -31,6 +31,7 @@ dependencies {
     // KSP processors
     ksp("io.micronaut.validation:micronaut-validation-processor")
     ksp("io.micronaut.serde:micronaut-serde-processor")
+    ksp("io.micronaut.data:micronaut-data-processor")
 
     // Core runtime
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
@@ -57,6 +58,16 @@ dependencies {
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    // Micronaut Data MongoDB
+    implementation("io.micronaut.data:micronaut-data-mongodb")
+
+    // MongoDB Sync Driver
+    implementation("org.mongodb:mongodb-driver-sync:4.11.0") // or latest version
+
+    // Micronaut MongoDB configuration
+    implementation("io.micronaut.mongodb:micronaut-mongo-sync")
+
 }
 
 

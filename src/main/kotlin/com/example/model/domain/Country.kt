@@ -1,10 +1,14 @@
-package com.example.controller.model.domain
+package com.example.model.domain
 
-import com.example.controller.model.base.BaseDomain
+import com.example.model.base.BaseDomain
+import io.micronaut.serde.annotation.Serdeable.*
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 
+@Serializable
+@Deserializable
+@Schema(description = "Country")
 data class Country (
     @Schema(description = "Unique identifier", example = "1")
     override val id: Long = 0,
