@@ -1,34 +1,38 @@
 package com.example.service.base
 
 import com.example.model.base.BaseDomain
+import io.micronaut.data.repository.CrudRepository
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicLong
 
 abstract class BaseService<T: BaseDomain, Req : Any>(
     private val insertPredicate: (Long, Req) -> T,
     private val updatePredicate: (T, Req) -> T,
+    private val repo: CrudRepository<T, Long>
 )
 {
     protected val seq = AtomicLong(0)
-    protected var items = ConcurrentHashMap<Long, T>()
+//    protected var items = ConcurrentHashMap<Long, T>()
 
-    open fun list(): List<T> = items.values.sortedBy { it.id }
+    open fun list(): List<T> = repo.findAll().toList().sortedBy { it.id }
 
-    fun get(id: Long): T? = items[id]
+    fun get(id: Long): T? = repo.findById(id).orElse(null)
 
-    open fun delete(id: Long): Boolean = items.remove(id) != null
+    open fun delete(id: Long): Boolean =
+        if (repo.existsById(id)) {
+            repo.deleteById(id)
+            true
+        } else false
 
     open fun create(req: Req): T {
         val id = seq.incrementAndGet()
         val entity = insertPredicate(id, req)
-        items[id] = entity
-        return entity
+        return repo.save(entity)
     }
 
-    open fun update(id: Long, req: Req): T? {
-        val existing = items[id] ?: return null
+    open fun update(id: Long, req: Req): Boolean {
+        val existing = repo.findById(id).orElse(null) ?: return false
         val updated = updatePredicate(existing, req)
-        items[id] = updated
-        return updated
+        return repo.update(updated) != null;
     }
 }

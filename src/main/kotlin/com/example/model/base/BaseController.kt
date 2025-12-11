@@ -34,7 +34,7 @@ abstract class BaseController<Domain: BaseDomain, Req: Any, T: BaseService<Domai
     open fun update(
         @PathVariable @Min(1) id: Long,
         @Body @Valid req: Req
-    ): HttpResponse<Domain> =
+    ): HttpResponse<Boolean> =
         service.update(id, req)?.let { HttpResponse.ok(it) } ?: HttpResponse.notFound()
 
     @Delete("/{id}")

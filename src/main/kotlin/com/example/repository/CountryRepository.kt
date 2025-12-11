@@ -5,4 +5,4 @@ import io.micronaut.data.mongodb.annotation.MongoRepository
 import io.micronaut.data.repository.CrudRepository
 
 @MongoRepository
-interface CountryRepository : CrudRepository<Country, Int>
+interface CountryRepository : CrudRepository<Country, Long>
