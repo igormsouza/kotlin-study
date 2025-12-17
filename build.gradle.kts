@@ -1,7 +1,9 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.9.25"
-    id("org.jetbrains.kotlin.plugin.allopen") version "1.9.25"
-    id("com.google.devtools.ksp") version "1.9.25-1.0.20"
+    kotlin("jvm") version "2.2.10"
+    id("org.jetbrains.kotlin.plugin.allopen") version "2.2.10"
+    id("com.google.devtools.ksp") version "2.2.10-2.0.2"
     id("io.micronaut.application") version "4.6.1"
     id("com.gradleup.shadow") version "8.3.9"
     id("io.micronaut.aot") version "4.6.1"
@@ -28,10 +30,17 @@ dependencies {
     // Align all Micronaut module versions to the same release
     implementation(platform("io.micronaut.platform:micronaut-platform:$micronautVersion"))
 
+    // Micronaut Data MongoDB
+    implementation("io.micronaut.data:micronaut-data-mongodb")
+    ksp("io.micronaut.data:micronaut-data-document-processor:$micronautVersion")
+
+    // Micronaut MongoDB configuration
+    implementation("io.micronaut.mongodb:micronaut-mongo-sync")
+    implementation("org.mongodb:mongodb-driver-sync:4.11.0")
+
     // KSP processors
     ksp("io.micronaut.validation:micronaut-validation-processor")
     ksp("io.micronaut.serde:micronaut-serde-processor")
-    ksp("io.micronaut.data:micronaut-data-processor")
 
     // Core runtime
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
@@ -50,7 +59,8 @@ dependencies {
 
     //Swagger
     runtimeOnly("org.yaml:snakeyaml:2.2")
-    ksp("io.micronaut.openapi:micronaut-openapi:4.11.0")
+    ksp("io.micronaut.openapi:micronaut-openapi:6.19.3")
+    compileOnly("io.micronaut.openapi:micronaut-openapi-annotations:6.19.3")
     implementation("io.swagger.core.v3:swagger-annotations:2.2.21")
 
     // Logging / Jackson
@@ -58,15 +68,6 @@ dependencies {
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-    // Micronaut Data MongoDB
-    implementation("io.micronaut.data:micronaut-data-mongodb")
-
-    // MongoDB Sync Driver
-    implementation("org.mongodb:mongodb-driver-sync:4.11.0") // or latest version
-
-    // Micronaut MongoDB configuration
-    implementation("io.micronaut.mongodb:micronaut-mongo-sync")
 
 }
 
@@ -87,14 +88,16 @@ java {
 }
 
 kotlin {
+    // keep using Java 21 for toolchains
     jvmToolchain(21)
 
-    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-        kotlinOptions {
-            jvmTarget = "21"
-        }
+    // NEW: unified compiler options (replaces kotlinOptions)
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_21)          // instead of jvmTarget = "21"
+        freeCompilerArgs.add("-Xjsr305=strict")  // instead of += listOf(...)
     }
 }
+
 
 graalvmNative.toolchainDetection = false
 

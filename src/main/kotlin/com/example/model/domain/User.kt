@@ -3,17 +3,15 @@ package com.example.model.domain
 import com.example.model.base.BaseDomain
 import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
-import io.micronaut.serde.annotation.Serdeable.Deserializable
-import io.micronaut.serde.annotation.Serdeable.Serializable
+import io.micronaut.serde.annotation.Serdeable
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 
-@Serializable
-@Deserializable
-@Schema(description = "User")
+@Serdeable
 @MappedEntity("users")
+@Schema(description = "User")
 data class User(
     @field:Id
     @Schema(description = "Unique identifier", example = "1")
@@ -27,5 +25,8 @@ data class User(
     @field:NotBlank(message = "email is required")
     @field:Email(message = "email must be valid")
     @Schema(description = "Email address", example = "jane.doe@example.com")
-    val email: String
+    val email: String,
+
+    @field:NotBlank(message = "country is required")
+    val countryId: Long
 ) : BaseDomain

@@ -17,5 +17,9 @@ data class UserRequest(
     @field:NotBlank
     @field:Email
     @Schema(example = "jane.doe@example.com")
-    val email: String
+    val email: String,
+
+    @field:NotBlank
+    @Schema(example = "1")
+    val countryId: Long
 )
