@@ -4,6 +4,7 @@ import io.micronaut.serde.annotation.Serdeable
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.Positive
 import jakarta.validation.constraints.Size
 
 @Serdeable
@@ -19,7 +20,7 @@ data class UserRequest(
     @Schema(example = "jane.doe@example.com")
     val email: String,
 
-    @field:NotBlank
+    @field:Positive
     @Schema(example = "1")
     val countryId: Long
 )

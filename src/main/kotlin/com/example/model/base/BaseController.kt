@@ -25,7 +25,7 @@ abstract class BaseController<Domain: BaseDomain, Req: Any, T: BaseService<Domai
 
     @Post
     open fun create(@Body @Valid req: Req): HttpResponse<Domain> {
-        val created = service.create(req)
+        val created = service.create(req) ?: return HttpResponse.serverError()
         return HttpResponse.created(created)
             .header(HttpHeaders.LOCATION, "/api/users/${created.id}")
     }
@@ -35,7 +35,7 @@ abstract class BaseController<Domain: BaseDomain, Req: Any, T: BaseService<Domai
         @PathVariable @Min(1) id: Long,
         @Body @Valid req: Req
     ): HttpResponse<Boolean> =
-        service.update(id, req)?.let { HttpResponse.ok(it) } ?: HttpResponse.notFound()
+        service.update(id, req).let { HttpResponse.ok(it) } ?: HttpResponse.notFound()
 
     @Delete("/{id}")
     open fun delete(@PathVariable @Min(1) id: Long): HttpResponse<Unit> =
