@@ -8,7 +8,7 @@ import com.example.service.base.BaseService
 import jakarta.inject.Singleton
 
 @Singleton
-class UserService (val repo: UserRepository, val countryRepository: CountryRepository)
+class UserService (repo: UserRepository, val countryRepository: CountryRepository)
     : BaseService<User, UserRequest>(insertPredicate = { id, req ->
     User (
         id = id,
@@ -24,12 +24,12 @@ class UserService (val repo: UserRepository, val countryRepository: CountryRepos
     )
 }, repo = repo
 ){
-    override fun preCreate(req: UserRequest): Boolean = validateCountryExistence(req)
-    override fun preUpdate(req: UserRequest): Boolean = validateCountryExistence(req)
+    override fun preCreate(req: UserRequest): Boolean = req.validateCountryExistence()
+    override fun preUpdate(req: UserRequest): Boolean = req.validateCountryExistence()
 
-    fun validateCountryExistence(req: UserRequest): Boolean {
-        val countryExists = countryRepository.existsById(req.countryId)
-        require(countryExists) { "countryId does not exist: ${req.countryId}" }
+    fun UserRequest.validateCountryExistence(): Boolean {
+        val countryExists = countryRepository.existsById(this.countryId)
+        require(countryExists) { "countryId does not exist: ${this.countryId}" }
         return true
     }
 }
